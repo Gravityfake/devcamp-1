@@ -1,3 +1,7 @@
+* {
+  box-sizing: border-box;
+}
+
 body {
   text-align: center;
 }
@@ -31,13 +35,33 @@ body {
 }
 
 img {
+  display: block;
   width: 200px;
   height: 200px;
-  margin: 30px;
+  margin: auto;
 }
 
 p {
   font-size: 20px;
   width: 50%;
+  text-align: left;
   margin: auto;
+}
+
+div.a {
+  text-indent: 50px;
+}
+
+li {
+  font-size: 20px;
+  text-align: left;
+}
+
+.list {
+  width: 50%;
+  margin: auto;
+}
+
+.contact {
+  text-align: left;
 }
