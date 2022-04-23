@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <h1 class="text-center mb-4">Employee Table</h1>
+    <table class="table text-center">
+      <thead>
+        <tr id="header" class="font-weight-bold">
+          <td>Name</td>
+          <td>Gender</td>
+          <td>Company</td>
+          <td>Email</td>
+          <td>Friends</td>
+          <td>Balance</td>
+        </tr>
+      </thead>
+      <tbody id="tableBody"></tbody>
+    </table>
+
+    <script>
+      axios.get("homework1-4.json").then(function (response) {
+        console.log(response.data);
+        const arr = response.data;
+        console.log(arr[1].friends);
+        const result = arr
+          .filter((a) => a.gender == "male" && a.friends.length >= 2)
+          .map((b) => [
+            b.name,
+            b.gender,
+            b.company,
+            b.email,
+            b.friends,
+            "$" +
+              (
+                parseFloat(
+                  b.balance
+                    .substring(1, b.balance[length - 1])
+                    .replace(/,/g, "")
+                ) / 10
+              ).toFixed(2),
+          ]);
+
+        console.log(result);
+
+        for (let i = 0; i < result.length; i++) {
+          let tableBody = document.getElementById("tableBody");
+          let row = tableBody.appendChild(document.createElement("tr"));
+          for (let j = 0; j < result[i].length; j++) {
+            let col = row.appendChild(document.createElement("td"));
+            if (j === 4) {
+              let friendList = result[i][j].map((x) => x.name);
+              console.log(friendList); // ออกมาเป็น array
+              for (let k = 1; k <= result[i][j].length; k++) {
+                col.innerHTML += k + ". " + friendList[k - 1] + "<br />";
+              }
+            } else {
+              col.innerHTML = result[i][j];
+            }
+          }
+        }
+      });
+    </script>
+  </body>
+</html>
