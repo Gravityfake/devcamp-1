@@ -1,0 +1,47 @@
+[
+  {
+    "firstname": "Natthawadee",
+    "lastname": "Chansirinukroh",
+    "age": 31,
+    "gender": "female",
+    "address": {
+      "sub_district": "Khlongkhwang",
+      "district": "Phasicharoen",
+      "province": "Bangkok"
+    },
+    "contact": {
+      "mobile": "0801112222",
+      "email": "abcxyz@gmail.com"
+    }
+  },
+  {
+    "firstname": "Paiboon",
+    "lastname": "Panusbordee",
+    "age": 35,
+    "gender": "male",
+    "address": {
+      "sub_district": "Mahasawasd",
+      "district": "Bangkrew",
+      "province": "Nonthaburi"
+    },
+    "contact": {
+      "mobile": "0998888888",
+      "email": "paiboonpa@thaiprogrammer.org"
+    }
+  },
+  {
+    "firstname": "Peter",
+    "lastname": "Parker",
+    "age": 17,
+    "gender": "male",
+    "address": {
+      "sub_district": "Chrystie Street",
+      "district": "Manhattan",
+      "province": "New York"
+    },
+    "contact": {
+      "mobile": "0554443333",
+      "email": "spiderman@marvel.com"
+    }
+  }
+]

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <h1 class="text-center mb-4">Hello ReqRes Users!</h1>
+    <table class="table text-center">
+      <thead>
+        <tr id="name" class="font-weight-bold"></tr>
+      </thead>
+      <tbody>
+        <tr id="email"></tr>
+        <tr id="gender"></tr>
+        <tr id="age"></tr>
+        <tr id="avatar"></tr>
+      </tbody>
+    </table>
+
+    <script>
+      let aLastName = [];
+      function getUser(callback) {
+        axios.get("https://reqres.in/api/users").then(function (response) {
+          // console.log(response.data.data);
+          aUser = response.data.data;
+
+          for (let i in aUser) {
+            aLastName.push(aUser[i].last_name);
+            // aUser.push(user[i]);
+
+            axios
+              .get(`https://api.genderize.io?name=${aUser[i].first_name}`)
+              .then(function (response) {
+                let userGender = response.data.gender;
+                aUser[i].gender = userGender;
+                axios
+                  .get(`https://api.agify.io/?name=${aUser[i].first_name}`)
+                  .then(function (response) {
+                    let userAge = response.data.age;
+                    aUser[i].age = userAge;
+
+                    callback();
+
+                    let name = document.getElementById("name");
+                    let tdName = name.appendChild(document.createElement("td"));
+                    tdName.innerHTML = aUser[i].first_name;
+
+                    let email = document.getElementById("email");
+                    let tdEmail = email.appendChild(
+                      document.createElement("td")
+                    );
+                    tdEmail.innerHTML = aUser[i].email;
+
+                    let gender = document.getElementById("gender");
+                    let tdGender = gender.appendChild(
+                      document.createElement("td")
+                    );
+                    tdGender.innerHTML = aUser[i].gender;
+
+                    let age = document.getElementById("age");
+                    let tdAge = age.appendChild(document.createElement("td"));
+                    tdAge.innerHTML = aUser[i].age;
+
+                    let avatar = document.getElementById("avatar");
+                    let tdAvatar = avatar.appendChild(
+                      document.createElement("td")
+                    );
+                    tdAvatar.innerHTML = `<img src="${aUser[i].avatar}">`;
+                  });
+              });
+          }
+          console.log(aLastName);
+          console.log(aUser);
+        });
+      }
+
+      getUser(function () {
+        console.log(aUser);
+      });
+    </script>
+  </body>
+</html>
