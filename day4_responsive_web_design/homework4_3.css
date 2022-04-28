@@ -1,0 +1,17 @@
+.header {
+  height: auto;
+  background-color: white;
+}
+
+.footer {
+  height: 50px;
+  color: white;
+}
+
+img {
+  height: 350px;
+}
+
+.carousel .item {
+  height: 500px;
+}
