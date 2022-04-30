@@ -32,10 +32,10 @@ function draw(n) {
   text = "";
   let z = 0;
   for (let i = 1; i <= n; i++) {
-    for (let j = 1; j <= 1; j++) {
-      text += z;
-      z += 2;
-    }
+    // for (let j = 1; j <= 1; j++) {
+    text += z;
+    z += 2;
+    // }
     text += "\n";
   }
   console.log(text);
