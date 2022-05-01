@@ -57,15 +57,7 @@
             covidData.Thailand.active = response.data.active;
             covidData.Thailand.critical = response.data.critical;
             callback();
-            for (const item in covidData.Thailand) {
-              let thailand = document.getElementById("thailand");
-              let thaiCases = thailand.appendChild(
-                document.createElement("td")
-              );
-              thaiCases.innerHTML = covidData.Thailand[item];
-            }
           });
-        console.log(covidData);
       }
 
       function getWorldCase(callback) {
@@ -79,17 +71,26 @@
           covidData.World.active = response.data.active;
           covidData.World.critical = response.data.critical;
           callback();
-          for (const item in covidData.World) {
-            let world = document.getElementById("world");
-            let worldCases = world.appendChild(document.createElement("td"));
-            worldCases.innerHTML = covidData.World[item];
-          }
         });
+      }
+
+      function printData() {
+        for (const item in covidData.Thailand) {
+          let thailand = document.getElementById("thailand");
+          let thaiCases = thailand.appendChild(document.createElement("td"));
+          thaiCases.innerHTML = covidData.Thailand[item];
+        }
+        for (const item in covidData.World) {
+          let world = document.getElementById("world");
+          let worldCases = world.appendChild(document.createElement("td"));
+          worldCases.innerHTML = covidData.World[item];
+        }
       }
 
       getThailandCase(function () {
         getWorldCase(function () {
-          // console.log(covidData);
+          console.log(covidData);
+          printData();
         });
       });
     </script>

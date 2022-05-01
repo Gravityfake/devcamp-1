@@ -29,7 +29,7 @@
 
     <script>
       let aLastName = [];
-      function getUser(callback) {
+      function getUser() {
         axios.get("https://reqres.in/api/users").then(function (response) {
           // console.log(response.data.data);
           aUser = response.data.data;
@@ -49,7 +49,7 @@
                     let userAge = response.data.age;
                     aUser[i].age = userAge;
 
-                    callback();
+                    //callback();
 
                     let name = document.getElementById("name");
                     let tdName = name.appendChild(document.createElement("td"));
@@ -85,7 +85,7 @@
       }
 
       getUser(function () {
-        console.log(aUser);
+        //console.log(aUser);
       });
     </script>
   </body>
