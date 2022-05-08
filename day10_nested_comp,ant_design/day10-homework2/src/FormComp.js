@@ -116,10 +116,14 @@ const FormComp = () => {
     }
     console.log(values.agreement);
 
-    let skills = "";
-    for (let i in values.skills_list) {
-      skills += `${values.skills_list[i]} `;
-    }
+    // let skills = "";
+    // for (let i in values.skills_list) {
+    //   skills += `${values.skills_list[i]} `;
+    // }
+    // console.log(skills);
+
+    let skills = values.skills_list.map((x) => x);
+    let skillsInModal = skills.join(", ");
     console.log(skills);
 
     Modal.info({
@@ -146,7 +150,7 @@ const FormComp = () => {
           <br />
           Introduction: {values.introduction}
           <br />
-          Skills: {skills}
+          Skills: {skillsInModal}
         </pre>
       ),
     });
