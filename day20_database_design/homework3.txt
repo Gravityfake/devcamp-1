@@ -1,0 +1,28 @@
+// นักเรียนแต่ละคน ซื้อคอร์สไปคนละเท่าไหร่ และจำนวนกี่คอร์ส
+SELECT student_id, students.name, sum(price), COUNT(*)
+FROM (
+select * from enrolls 
+INNER JOIN courses ON enrolls.course_id = courses.id
+) as new_table 
+INNER JOIN students ON students.id = new_table.student_id 
+GROUP BY new_table.student_id
+
+
+// นักเรียนแต่ละคน ซื้อคอร์สไหน ราคาแพงสุด
+SELECT student_id, students.name, new_table.name, max(price)
+FROM (
+select * from enrolls 
+INNER JOIN courses ON enrolls.course_id = courses.id
+) as new_table 
+INNER JOIN students ON students.id = new_table.student_id 
+GROUP BY new_table.student_id
+
+
+// นักเรียนแต่ละคนซื้อคอร์สราคาเฉลี่ยคนละเท่าไหร่
+SELECT student_id, students.name, avg(price)
+FROM (
+select * from enrolls 
+INNER JOIN courses ON enrolls.course_id = courses.id
+) as new_table 
+INNER JOIN students ON students.id = new_table.student_id 
+GROUP BY new_table.student_id
