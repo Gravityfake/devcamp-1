@@ -17,7 +17,7 @@ router.get("/from-user/:id", async (req, res, next) => {
       `SELECT * from user where id = ${req.params.id}`
     );
     console.log(users[0]);
-    req.myJSON = users[0];
+    res.myJSON = users[0];
     next();
     await connection.end();
   } catch (error) {

@@ -12,7 +12,7 @@ app.use("/", router);
 app.use(async function (req, res, next) {
   const myDate = new Date();
   const additionJSON = {
-    data: req.myJSON,
+    data: res.myJSON,
     additionalData: {
       userId: 1,
       dateTime:
