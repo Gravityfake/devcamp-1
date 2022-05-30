@@ -38,11 +38,17 @@ export default function Profile() {
     }
   }, []);
 
+  function handleLogout() {
+    localStorage.removeItem("token");
+    navigate("/login");
+  }
+
   return (
     <>
       <h2>Hello K.{name}, this is your profile page</h2>
       <h3>My shopping cart items</h3>
       <ul>{cart && cart.map((c) => <li>{c.item}</li>)}</ul>
+      <button onClick={handleLogout}>Log Out</button>
     </>
   );
 }
