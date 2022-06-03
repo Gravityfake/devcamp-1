@@ -1,51 +1,39 @@
-import React, { useEffect } from "react";
-import { useState } from "react";
+import React from "react";
 import axios from "axios";
 import { Button, Form, Input, Space } from "antd";
 import { useSelector, useDispatch } from "react-redux";
-import { addProduct } from "./productReducer";
-import LocaleProvider from "antd/lib/locale-provider";
-import { useNavigate } from "react-router-dom";
+import { editProduct } from "./productReducer";
+import { useNavigate, useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 const EditProduct = () => {
-  let navigate = useNavigate();
+  const navigate = useNavigate();
+  const params = useParams();
 
-  const [id, setID] = useState(null);
-  const [name, setName] = useState("");
-  const [stock, setStock] = useState();
-  const [category, setCategory] = useState("");
-
-  useEffect(() => {
-    // setID(localStorage.getItem("id"));
-    // setName(localStorage.getItem("name"));
-    // setStock(localStorage.getItem("stock"));
-    // setCategory(localStorage.getItem("category"));
-  }, []);
-
-  console.log(id, name, stock, category);
-
-  const updateProduct = async () => {
-    await axios.put(`/api/product/${id}`, { name, stock, category });
-    // navigate("/myupload");
-  };
+  const productlist = useSelector((state) => state.product);
+  const dispatch = useDispatch();
 
   const [form] = Form.useForm();
-  // const dispatch = useDispatch();
 
-  // const onFinish = () => {
-  //   dispatch(addProduct(values));
-  // };
+  const onFinish = async (values) => {
+    dispatch(editProduct(values));
+    await axios.put(`/api/product/${params.id}`, {
+      name: values.name,
+      stock: values.stock,
+      category: values.category,
+    });
+    // form.resetFields(); // ตอนแรกติดตัวนี้เลยไม่ยอมกลับไปหน้าแรก
+    navigate("/");
+  };
 
-  // const productlist = useSelector((state) => state.product);
-  // console.log(productlist.productData);
+  const index = productlist.productData.findIndex((obj) => obj.id == params.id);
+  console.log(productlist.productData[index].id);
 
   return (
     <>
-      {/* <h1>Product ID: {productlist.productData[0].key}</h1> */}
       <div
         style={{
-          marginTop: "50px",
+          marginTop: "30px",
           display: "flex",
           justifyContent: "center",
         }}
@@ -53,23 +41,32 @@ const EditProduct = () => {
         <Space>
           <Form
             form={form}
-            onFinish={updateProduct}
-            fields={[
-              {
-                name: "name",
-                value: name,
-              },
-              {
-                name: "stock",
-                value: stock,
-              },
-              {
-                name: "category",
-                value: category,
-              },
-            ]}
+            // ใช้แบบนี้ไม่ได้เพราะจะได้เป็นค่านี้ตลอดตอนกดส่ง(ค่าจะไม่เปลี่ยนแปลง) ต้องไปใช้ initialValues
+            // fields={[
+            //   {
+            //     name: "name",
+            //     value: productlist.productData[index].name,
+            //   },
+            //   {
+            //     name: "stock",
+            //     value: productlist.productData[index].stock,
+            //   },
+            //   {
+            //     name: "category",
+            //     value: productlist.productData[index].category,
+            //   },
+            // ]}
+            initialValues={{
+              name: productlist.productData[index].name,
+              stock: productlist.productData[index].stock,
+              category: productlist.productData[index].category,
+            }}
+            onFinish={onFinish}
           >
-            <h2>Product ID: {id}</h2>
+            {/* <h2>Product ID: {id}</h2> */}
+            <h2 style={{ textAlign: "center" }}>
+              Product ID: {productlist.productData[index].id}
+            </h2>
             <Form.Item
               name="name"
               label="Product Name"
@@ -81,7 +78,7 @@ const EditProduct = () => {
                 },
               ]}
             >
-              <Input onChange={(e) => setName(e.target.value)} />
+              <Input />
             </Form.Item>
             <Form.Item
               name="stock"
@@ -94,7 +91,7 @@ const EditProduct = () => {
                 },
               ]}
             >
-              <Input onChange={(e) => setStock(e.target.value)} />
+              <Input />
             </Form.Item>
             <Form.Item
               name="category"
@@ -107,14 +104,25 @@ const EditProduct = () => {
                 },
               ]}
             >
-              <Input onChange={(e) => setCategory(e.target.value)} />
-            </Form.Item>
+              <Input />
+            </Form.Item>{" "}
+            {/* <Form.Item
+              name="photo"
+              label="Photo"
+              labelCol={{ span: 10 }}
+              wrapperCol={{ span: 16 }}
+              rules={[
+                {
+                  required: false,
+                },
+              ]}
+            >
+              <MyUpload />
+            </Form.Item> */}
             <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-              <Link to="/">
-                <Button type="primary" htmlType="submit">
-                  Edit
-                </Button>
-              </Link>
+              <Button type="primary" htmlType="submit">
+                Edit
+              </Button>
             </Form.Item>
           </Form>
         </Space>

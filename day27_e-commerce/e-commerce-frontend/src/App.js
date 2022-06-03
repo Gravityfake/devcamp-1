@@ -2,10 +2,10 @@ import "./App.css";
 import React from "react";
 import ProductList from "./ProductList";
 import NewProduct from "./NewProduct";
-import { Routes, Route, Link } from "react-router-dom";
 import EditProduct from "./EditProduct";
 import ViewProduct from "./ViewProduct";
 import MyUpload from "./MyUpload";
+import { Routes, Route, Link } from "react-router-dom";
 
 function App() {
   // const arr = [1, 2, 3, 4, 5];
@@ -36,15 +36,11 @@ function App() {
   // }
 
   return (
-    // <div>
-    //   <ProductList />
-    //   <NewProduct />
-    // </div>
     <Routes>
-      <Route index element={<ProductList />} />
+      <Route path="/" element={<ProductList />} />
       <Route path="/new-product" element={<NewProduct />} />
-      <Route path="/edit-product" element={<EditProduct />} />
-      <Route path="/view-product" element={<ViewProduct />} />
+      <Route path="/edit-product/:id" element={<EditProduct />} />
+      <Route path="/view-product/:id" element={<ViewProduct />} />
       <Route path="/myupload" element={<MyUpload />} />
     </Routes>
   );

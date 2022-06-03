@@ -5,6 +5,7 @@ export const productReducer = createSlice({
   initialState: {
     productData: [],
   },
+
   reducers: {
     initState: (state, action) => {
       state.productData = action.payload;
@@ -15,14 +16,25 @@ export const productReducer = createSlice({
     },
 
     editProduct: (state, action) => {
+      // debugger;
       const index = state.productData.findIndex(
         (obj) => obj.id == action.payload.id
       );
-      console.log(index);
-      state[index] = action.payload;
+      // console.log(action);
+      // console.log(index);
+      state.productData[index] = action.payload;
+    },
+    deleteProduct: (state, action) => {
+      const index = state.productData.findIndex(
+        (obj) => obj.id == action.payload.id
+      );
+      if (index !== -1) {
+        state.splice(index, 1);
+      }
     },
   },
 });
 
 export default productReducer.reducer;
-export const { initState, addProduct, editProduct } = productReducer.actions;
+export const { initState, addProduct, editProduct, deleteProduct } =
+  productReducer.actions;

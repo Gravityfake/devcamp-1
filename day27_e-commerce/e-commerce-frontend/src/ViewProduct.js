@@ -1,44 +1,16 @@
-import React, { useEffect } from "react";
-import { useState } from "react";
-import axios from "axios";
-import { Button, Form, Input, Space } from "antd";
-import { useSelector, useDispatch } from "react-redux";
-import { addProduct } from "./productReducer";
-import LocaleProvider from "antd/lib/locale-provider";
+import React from "react";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { Descriptions, Badge } from "antd";
+import { Descriptions, Button } from "antd";
+import { useParams } from "react-router-dom";
 
 const ViewProduct = () => {
-  let navigate = useNavigate();
+  const params = useParams();
+  const navigate = useNavigate();
+  const productList = useSelector((state) => state.product);
 
-  const [id, setID] = useState(null);
-  const [name, setName] = useState("");
-  const [stock, setStock] = useState();
-  const [category, setCategory] = useState("");
-
-  useEffect(() => {
-    setID(localStorage.getItem("id"));
-    setName(localStorage.getItem("name"));
-    setStock(localStorage.getItem("stock"));
-    setCategory(localStorage.getItem("category"));
-  }, []);
-
-  console.log(id, name, stock, category);
-
-  // const updateProduct = async () => {
-  //   await axios.put(`/api/product/${id}`, { name, stock, category });
-  //   navigate("/");
-  // };
-
-  // const [form] = Form.useForm();
-  // const dispatch = useDispatch();
-
-  // const onFinish = () => {
-  //   dispatch(addProduct(values));
-  // };
-
-  // const productlist = useSelector((state) => state.product);
-  // console.log(productlist.productData);
+  const index = productList.productData.findIndex((obj) => obj.id == params.id);
+  console.log(productList.productData[index].id);
 
   return (
     <div
@@ -49,15 +21,30 @@ const ViewProduct = () => {
       }}
     >
       <Descriptions title="View Product" layout="vertical" bordered>
-        {/* <Descriptions.Item label="Status" span={3}>
-          <Badge status="processing" text="Running" />
-        </Descriptions.Item> */}
-        <Descriptions.Item label="Product ID :">{id}</Descriptions.Item>
-        {/* <Descriptions.Item label="Photo :">photo</Descriptions.Item> */}
-        <Descriptions.Item label="Product Name :">{name}</Descriptions.Item>
-        <Descriptions.Item label="Category :">{category}</Descriptions.Item>
-        <Descriptions.Item label="Stock Left :">{stock}</Descriptions.Item>
+        <Descriptions.Item label="Photo :">
+          <img
+            style={{ width: "200px" }}
+            src={`http://localhost:3000/static/upload-files/${productList.productData[index].photo}`}
+          />
+        </Descriptions.Item>
+        <Descriptions.Item label="Product ID :">
+          {productList.productData[index].id}
+        </Descriptions.Item>
+        <Descriptions.Item label="Product Name :">
+          {productList.productData[index].name}
+        </Descriptions.Item>
+        <Descriptions.Item label="Category :">
+          {productList.productData[index].category}
+        </Descriptions.Item>
+        <Descriptions.Item label="Stock Left :">
+          {productList.productData[index].stock}
+        </Descriptions.Item>
       </Descriptions>
+      <div>
+        <Button type="primary" onClick={() => navigate("/")}>
+          Back
+        </Button>
+      </div>
     </div>
   );
 };

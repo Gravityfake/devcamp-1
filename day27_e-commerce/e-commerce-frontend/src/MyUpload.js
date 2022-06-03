@@ -3,6 +3,7 @@ import "antd/dist/antd.css";
 import "./index.css";
 import { Upload, message, Button } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
+
 const props = {
   name: "file",
   action: "/api/product/upload",
@@ -10,9 +11,11 @@ const props = {
     authorization: "authorization-text",
   },
 
-  onChange(info) {
+  async onChange(info) {
     if (info.file.status !== "uploading") {
       console.log(info.file, info.fileList);
+      console.log(info.file.uid);
+      console.log(info.file.originFileObj.name);
     }
 
     if (info.file.status === "done") {

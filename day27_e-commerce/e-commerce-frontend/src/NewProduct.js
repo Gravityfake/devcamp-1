@@ -1,10 +1,10 @@
 import React from "react";
-import { Button, Form, Input, Space } from "antd";
 import axios from "axios";
+import { Button, Form, Input, Space } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 import { addProduct } from "./productReducer";
-import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import MyUpload from "./MyUpload";
 
 const NewProduct = () => {
   const [form] = Form.useForm();
@@ -12,17 +12,17 @@ const NewProduct = () => {
   const navigate = useNavigate();
 
   const onFinish = async (values) => {
-    dispatch(addProduct(values));
     try {
-      const newProduct = await axios.post("/api/product/add", {
+      await axios.post("/api/product/add", {
         name: values.name,
         stock: values.stock,
         category: values.category,
+        // photo:
       });
     } catch (e) {
       console.error(e);
     }
-    form.resetFields();
+    dispatch(addProduct(values));
     navigate("/");
   };
 
@@ -80,6 +80,20 @@ const NewProduct = () => {
             >
               <Input />
             </Form.Item>
+            <Form.Item
+              name="photo"
+              label="Photo"
+              labelCol={{ span: 10 }}
+              wrapperCol={{ span: 16 }}
+              rules={[
+                {
+                  required: false,
+                },
+              ]}
+            >
+              <MyUpload />
+            </Form.Item>
+
             <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
               <Button type="primary" htmlType="submit">
                 Create
