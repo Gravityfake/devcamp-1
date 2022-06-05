@@ -57,6 +57,7 @@ const ProductList = () => {
               src={`http://localhost:3000/static/upload-files/${r.photo}`}
             /> */}
             <Avatar
+              size={64}
               src={`http://localhost:3000/static/upload-files/${r.photo}`}
             />
           </div>

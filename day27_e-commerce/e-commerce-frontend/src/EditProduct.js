@@ -3,6 +3,7 @@ import axios from "axios";
 import { Button, Form, Input, Space } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 import { editProduct } from "./productReducer";
+import MyUpload from "./MyUpload";
 import { useNavigate, useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 
@@ -106,7 +107,7 @@ const EditProduct = () => {
             >
               <Input />
             </Form.Item>{" "}
-            {/* <Form.Item
+            <Form.Item
               name="photo"
               label="Photo"
               labelCol={{ span: 10 }}
@@ -118,7 +119,7 @@ const EditProduct = () => {
               ]}
             >
               <MyUpload />
-            </Form.Item> */}
+            </Form.Item>
             <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
               <Button type="primary" htmlType="submit">
                 Edit

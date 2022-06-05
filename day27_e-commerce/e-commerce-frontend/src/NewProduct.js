@@ -1,6 +1,6 @@
 import React from "react";
 import axios from "axios";
-import { Button, Form, Input, Space } from "antd";
+import { Button, Form, Input, Space, Upload } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 import { addProduct } from "./productReducer";
 import { useNavigate } from "react-router-dom";
@@ -17,12 +17,14 @@ const NewProduct = () => {
         name: values.name,
         stock: values.stock,
         category: values.category,
-        // photo:
+        // photo: localStorage.getItem("photo"),
       });
     } catch (e) {
       console.error(e);
     }
     dispatch(addProduct(values));
+    console.log(localStorage.getItem("photo"));
+    // localStorage.removeItem("photo");
     navigate("/");
   };
 

@@ -21,48 +21,41 @@ let filename;
 router.post("/upload", (req, res) => {
   const newpath = __dirname + "/../public/upload-files/";
   const file = req.files.file;
-  filename = Date.now() + "--" + file.name;
+  // filename = Date.now() + "--" + file.name;
+  const dotIndex = file.name.lastIndexOf(".");
+  const fileExtension = file.name.substr(dotIndex);
+  const randomFilename = new Date().getTime();
+  filename = randomFilename + fileExtension;
 
   file.mv(`${newpath}${filename}`, (err) => {
     if (err) {
       res.status(500).send({ message: "File upload failed" });
-    } else {
-      // insert photo's filename to database
-      pool.query(`insert into product (photo) values ('${filename}')`);
-      // response
-      res.status(200).send({ message: "File Uploaded", filename: filename });
     }
+    res.status(200).send({ message: "File Uploaded", filename: filename });
+    // res.status(200).json(rows[0]);
   });
 });
 
 // add(update) name, stock, category to database
-router.post("/add", async function (req, res) {
-  const rows = await pool.query(
-    `update product set name = '${req.body.name}' , stock = ${req.body.stock}, category = '${req.body.category}' where photo = '${filename}'`
-  );
-  res.json(rows[0]);
-});
-
 // router.post("/add", async function (req, res) {
 //   const rows = await pool.query(
-//     `insert into product (name, stock, category, photo) values ('${req.body.name}' , ${req.body.stock}, '${req.body.category}', '${req.body.photo}')`
+//     `update product set name = '${req.body.name}' , stock = ${req.body.stock}, category = '${req.body.category}' where photo = '${filename}'`
 //   );
 //   res.json(rows[0]);
 // });
 
-// update name, stock, category in database
-router.put("/:id", async function (req, res) {
+router.post("/add", async function (req, res) {
   const rows = await pool.query(
-    `update product set name = '${req.body.name}' , stock = ${req.body.stock}, category = '${req.body.category}' where id = ${req.params.id}`
+    `insert into product (name, stock, category, photo) values ('${req.body.name}' , ${req.body.stock}, '${req.body.category}', '${filename}')`
   );
   res.json(rows[0]);
+});
 
-  // console.log("rows", rows);
-  // if (rows.affectedRows == 1) {
-  //   res.status(200).json(rows);
-  // } else {
-  //   res.status(400).send("ID does not exist in database");
-  // }
+router.put("/:id", async function (req, res) {
+  const rows = await pool.query(
+    `update product set name = '${req.body.name}' , stock = ${req.body.stock}, category = '${req.body.category}', photo = '${filename}' where id = ${req.params.id}`
+  );
+  res.json(rows[0]);
 });
 
 router.delete("/:id", async function (req, res) {
