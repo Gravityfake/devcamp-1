@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/antd-form/static/css/main.7d3672fa.css",
+    "main.js": "/antd-form/static/js/main.4ac313df.js",
+    "static/js/787.42d1a2b4.chunk.js": "/antd-form/static/js/787.42d1a2b4.chunk.js",
+    "index.html": "/antd-form/index.html",
+    "main.7d3672fa.css.map": "/antd-form/static/css/main.7d3672fa.css.map",
+    "main.4ac313df.js.map": "/antd-form/static/js/main.4ac313df.js.map",
+    "787.42d1a2b4.chunk.js.map": "/antd-form/static/js/787.42d1a2b4.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.7d3672fa.css",
+    "static/js/main.4ac313df.js"
+  ]
+}
